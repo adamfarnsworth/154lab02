@@ -44,7 +44,7 @@ findExponent:
     sll   $t1, $s1, 1               # eleminate sign bit from A[1]
     srl   $t1, $t1, 21              # 00..00xx..xx
     sll   $t3, $s3, 1               # eleminate sign bit from B[1]
-    srl   $t5, $t5, 21              # 00..00xx..xx
+    srl   $t3, $t3, 21              # 00..00xx..xx
 
 # checking which exponent is larger
     bge		$t1, $t3, aLargerThanB	  # if A^ >= B^ then target
@@ -57,8 +57,8 @@ findExponent:
     addi	$t3, $s3, 0			          # t3 = B[1]
     addi	$t4, $s4, 0			          # t4 = B[2]
 #removing |S|E10...E0|
-    sll   $t1, $t1, 11              # xx..xx00..00
-    srl   $t1, $t1, 11              # 00..00xx..xx
+    sll   $t1, $t1, 12              # xx..xx00..00
+    srl   $t1, $t1, 12              # 00..00xx..xx
     sll   $t3, $t3, 12              # xx..xx00..00
     srl   $t3, $t3, 12              # 00..00xx..xx
 # shifting to make exponents equal
@@ -145,9 +145,18 @@ finalNeg:
 # Addition
 #___________________________________________________________________________  
 startAdd:
-  #loading values at current position
-  lw		$t4, 0($t2)		          # $t4 = A[i]
-  lw		$t5, 0($t3)		          # $t5 = B[i]  
+# make the word represent the exponent
+    sll   $t1, $s1, 1               # eleminate sign bit from A[1]
+    srl   $t1, $t1, 21              # 00..00xx..xx
+    sll   $t3, $s3, 1               # eleminate sign bit from B[1]
+    srl   $t3, $t3, 21              # 00..00xx..xx
+
+# checking which exponent is larger
+    bge		$t1, $t3, aLargerThanB	  # if A^ >= B^ then target
+
+  
+
+
 
 
    
