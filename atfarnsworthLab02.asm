@@ -1,9 +1,9 @@
-  .data # Data declaration section
-    #globals
-    emptyArrayC: .space 8 #1 word = 4 bytes, 2 words = 8 bytes -> 64 bits
-    emptyArrayD: .space 8 #1 word = 4 bytes, 2 words = 8 bytes -> 64 bits   
-    wordSet1: .word ‭1077392179‬, ‭858993459‬ #23.7
-    wordSet2: .word ‭1078751723‬, ‭2233382994‬ #56.89
+.data # Data declaration section
+    #globals 1 word = 4 bytes, 2 words = 8 bytes -> 64 bits
+    emptyArrayC: .space 8
+    emptyArrayD: .space 8
+    wordSet1: .word 0x4037B333, 0x33333333
+    wordSet2: .word 0x404C71EB, 0x851EB852
   .text # Assembly language instructions
 
 # a0 = A[]
@@ -34,9 +34,9 @@ main:
   la		$a2, emptyArrayC	      # declairing "C"
   la		$a3, emptyArrayD	      # declairing "D" 
   lw		$s1, 0($a0)		          # $s1 = A[1]
-  lw		$s2, 1($a0)		          # $s2 = A[2]
+  lw		$s2, 4($a0)		          # $s2 = A[2]
   lw		$s3, 0($a1)		          # $s3 = B[1]
-  lw		$s4, 1($a1)		          # $s4 = B[2]
+  lw		$s4, 4($a1)		          # $s4 = B[2]
   
 #___________________________________________________________________________
 # finding smaller exponent 
@@ -230,7 +230,7 @@ AminusB:
     sll     $t3, $t3, 16            #xx..xx00..00
 # mergeing LHS and RHS for C[2]
     add     $t5, $t3, $t4           # lhs + rhs ===> A[2] - B[2]
-    sw		$t5, 1($a2)		        # C[2] = A[2] - B[2]
+    sw		$t5, 4($a2)		        # C[2] = A[2] - B[2]
 # subtracing A[1] and B[1]
     sub     $t5, $t6, $t8           # A[1] - B[1]
     sub     $t5, $t5, $t0           # - carry
@@ -257,7 +257,7 @@ BminusA:
     sll     $t3, $t3, 16            #xx..xx00..00
 # mergeing LHS and RHS for C[2]
     add     $t5, $t3, $t4           # lhs + rhs ===> B[2] - A[2]
-    sw		$t5, 1($a2)		        # C[2] = B[2] - A[2]
+    sw		$t5, 4($a2)		        # C[2] = B[2] - A[2]
 # subtracing A[1] and B[1]
     sub     $t5, $t8, $t6           # B[1] - A[1]
     sub     $t5, $t5, $t0           # - carry
@@ -298,7 +298,7 @@ startAdd:
     sll     $t3, $t3, 16            #xx..xx00..00
 # mergeing LHS and RHS for C[2]
     add     $t5, $t3, $t4           # lhs + rhs ===> A[2] + B[2]
-    sw		$t5, 1($a2)		        # C[2] = A[2] + B[2]
+    sw		$t5, 4($a2)		        # C[2] = A[2] + B[2]
 # adding A[1] and B[1]
     add     $t5, $t6, $t8           # A[1] + B[1]
     add     $t5, $t5, $t0           # + carry
