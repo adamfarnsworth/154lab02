@@ -1,7 +1,6 @@
 
 # Double-precision floating-point arithmetic
 
-## Task
 Double-precision floating-point FADD and FMUL functions in
 MIPS using only integer instructions and integer registers. You are not supposed to use
 ANY floating-point instructions or registers.  
